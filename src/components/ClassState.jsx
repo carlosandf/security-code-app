@@ -1,17 +1,43 @@
 import React from 'react';
+import { Loading } from '@components/Loading';
 
 class ClassState extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: false,
+      error: true,
+      loading: false,
     };
+  }
+  
+  
+  // componentWillMount
+  // UNSAFE_componentWillMount() {
+  //   console.log('UNSAFE_componentWillMount');
+  // }
+
+  // componentDidMount() {
+  //   console.log('componentDidMount');
+  // }
+
+  componentDidUpdate() {
+    console.log('Actualizacion');
+
+    if (this.state.loading) {
+      setTimeout(() => {
+        console.log('haciendo la vaidacion');
+  
+        this.setState({ loading: false })
+  
+        console.log('terminando la vaidacion');
+      }, 3000);
+    }
   }
 
   render() {
     const { name } = this.props;
-    const { error } = this.state;
+    const { error, loading } = this.state;
     return (
       <div>
         <h2>Eliminar {name}</h2>
@@ -20,10 +46,13 @@ class ClassState extends React.Component {
         {error && (
           <p>Error: El código es incorrecto</p>
         )}
+        {loading && (
+          <Loading />
+        )}
 
         <input placeholder='Codigo de seguridad'/>
         <button
-          onClick={() => this.setState({ error: !error })}>
+          onClick={() => this.setState({ loading: true })}>
           Comprobar
         </button>
       </div>

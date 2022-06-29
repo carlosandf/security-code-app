@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Loading } from '@components/Loading';
 
 function UseState({ name }) {
   const [error, setError] = useState(true);
@@ -29,7 +30,7 @@ function UseState({ name }) {
         <p>Error: El código es incorrecto</p>
       )}
       {loading && (
-        <p>Cargando...</p>
+        <Loading />
       )}
 
       <input placeholder='Codigo de seguridad'/>
