@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Loading } from '@components/Loading';
 
+const SECURITY_CODE = 'paradigma';
+
 function UseState({ name }) {
-  const [error, setError] = useState(true);
+  const [value, setValue] = useState('');
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  console.log(value);
 
   useEffect(() => {
     console.log('Empezando el efecto');
 
     if (loading) {
+      //setError(false);
       setTimeout(() => {
         console.log('haciendo la vaidacion');
   
-        setLoading(false)
+        if (value !== SECURITY_CODE) {
+          setError(true);
+        }
+        setLoading(false);
   
         console.log('terminando la vaidacion');
       }, 3000);
@@ -20,6 +29,7 @@ function UseState({ name }) {
  
     console.log('Terminando el efecto');
   }, [loading]);
+
 
   return (
     <div>
@@ -33,7 +43,14 @@ function UseState({ name }) {
         <Loading />
       )}
 
-      <input placeholder='Codigo de seguridad'/>
+      <input
+        placeholder='Codigo de seguridad'
+        value={value}
+        onChange={(event) => {
+          setError(false);
+          setValue(event.target.value)
+        }}
+      />
       <button
         onClick={() => setLoading(true)}
       >Comprobar</button>
